@@ -55,7 +55,33 @@ It was built to practice production-style Spring Boot architecture end to end: p
 
 ## Screenshots
 
-> _Screenshots coming soon._ Run the app locally (see [Running locally](#running-locally)) to explore the public portfolio and the admin dashboard. Capture guidance and the expected filenames live in [`docs/screenshots/`](docs/screenshots/); once the PNGs are added they will render here.
+### Home page
+
+![Home page](docs/screenshots/home.png)
+
+### Projects page
+
+![Projects page](docs/screenshots/projects.png)
+
+### Project detail
+
+![Project detail](docs/screenshots/project.png)
+
+### Admin dashboard
+
+![Admin dashboard](docs/screenshots/admin-dashboard.png)
+
+### Admin blog
+
+![Admin blog](docs/screenshots/admin-blog.png)
+
+### Admin TODO
+
+![Admin TODO](docs/screenshots/admin-todo.png)
+
+### Admin notes
+
+![Admin notes](docs/screenshots/admin-notes.png)
 
 ---
 
