@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head :: head('Dashboard')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('dashboard')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <h1>Dashboard</h1>
+            <p class="muted">Welcome back, <span sec:authentication="name">admin</span>.</p>
+        </header>
+
+        <section class="stat-grid">
+            <article class="stat-card">
+                <span class="stat-label">Projects</span>
+                <span class="stat-value" th:text="${projectCount}">0</span>
+                <a th:href="@{/admin/projects}">Manage &rarr;</a>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Technologies</span>
+                <span class="stat-value" th:text="${technologyCount}">0</span>
+                <a th:href="@{/admin/technologies}">Manage &rarr;</a>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Blog posts</span>
+                <span class="stat-value" th:text="${blogCount}">0</span>
+                <a th:href="@{/admin/blog}">Manage &rarr;</a>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Notes</span>
+                <span class="stat-value" th:text="${noteCount}">0</span>
+                <a th:href="@{/admin/notes}">Manage &rarr;</a>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">TODO tasks</span>
+                <span class="stat-value" th:text="${todoCount}">0</span>
+                <span class="stat-sub muted">
+                    <span th:text="${todoOpenCount}">0</span> open ·
+                    <span th:text="${todoDoneCount}">0</span> done
+                </span>
+                <a th:href="@{/admin/todos}">Manage &rarr;</a>
+            </article>
+        </section>
+
+        <section class="admin-panel">
+            <h2>Getting started</h2>
+            <p class="muted">
+                The CRUD modules (Projects, Technologies, Blog, Notes, TODO) are
+                being built step by step. The counts above will go live as each
+                module is connected.
+            </p>
+        </section>
+    </main>
+</div>
+</body>
+</html>

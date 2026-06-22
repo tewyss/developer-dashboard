@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${post.title})}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="container section">
+    <a class="back-link" th:href="@{/blog}">&larr; Back to blog</a>
+
+    <article class="post-article">
+        <p class="post-date muted"
+           th:text="${post.publishedAt != null} ? ${#temporals.format(post.publishedAt, 'd MMMM yyyy')} : ''">
+            1 January 2026</p>
+        <h1 class="post-article-title" th:text="${post.title}">Post title</h1>
+        <p class="post-article-excerpt muted" th:if="${post.excerpt}" th:text="${post.excerpt}">Excerpt.</p>
+
+        <div class="post-article-body">
+            <p th:text="${post.content}">Post content...</p>
+        </div>
+    </article>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

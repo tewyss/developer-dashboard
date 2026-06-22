@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Blog · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('blog')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header admin-header-row">
+            <div>
+                <h1>Blog</h1>
+                <p class="muted">Write and publish posts.</p>
+            </div>
+            <a class="btn btn-primary" th:href="@{/admin/blog/new}">+ New post</a>
+        </header>
+
+        <div class="alert alert-success" th:if="${success}" th:text="${success}">Saved.</div>
+
+        <div class="placeholder" th:if="${#lists.isEmpty(posts)}">
+            <p>No posts yet.</p>
+            <p class="muted">Click "New post" to write your first one.</p>
+        </div>
+
+        <table class="table" th:unless="${#lists.isEmpty(posts)}">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td>
+                    <span th:text="${post.title}">Title</span><br>
+                    <code class="muted" th:text="${post.slug}">slug</code>
+                </td>
+                <td>
+                    <form th:action="@{/admin/blog/{id}/publish(id=${post.id})}" method="post">
+                        <button type="submit" class="badge"
+                                th:classappend="${post.published} ? 'badge-accent' : 'badge-muted'"
+                                th:text="${post.published} ? 'Published' : 'Draft'">Draft</button>
+                    </form>
+                </td>
+                <td class="muted" th:text="${#temporals.format(post.updatedAt, 'd MMM yyyy')}">date</td>
+                <td class="actions">
+                    <a class="btn btn-outline btn-sm" th:href="@{/admin/blog/{id}/edit(id=${post.id})}">Edit</a>
+                    <a class="btn btn-outline btn-sm" th:if="${post.published}"
+                       th:href="@{/blog/{slug}(slug=${post.slug})}" target="_blank">View</a>
+                    <form th:action="@{/admin/blog/{id}/delete(id=${post.id})}" method="post"
+                          onsubmit="return confirm('Delete this post?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

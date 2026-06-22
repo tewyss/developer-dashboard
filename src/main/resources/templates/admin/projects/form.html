@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Project form · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('projects')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <a class="back-link" th:href="@{/admin/projects}">&larr; Back to projects</a>
+            <h1 th:text="${mode == 'edit'} ? 'Edit project' : 'New project'">Project form</h1>
+        </header>
+
+        <form class="form form-wide"
+              th:object="${projectForm}"
+              th:action="${mode == 'edit'} ? @{/admin/projects/{id}(id=*{id})} : @{/admin/projects}"
+              method="post">
+
+            <div class="form-row">
+                <label for="title">Title *</label>
+                <input type="text" id="title" th:field="*{title}">
+                <span class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">err</span>
+            </div>
+
+            <div class="form-row">
+                <label for="slug">Slug</label>
+                <input type="text" id="slug" th:field="*{slug}" placeholder="auto-generated from title if empty">
+                <span class="form-hint">Used in the URL: /projects/<em>your-slug</em>. Leave blank to auto-generate.</span>
+            </div>
+
+            <div class="form-row">
+                <label for="shortDescription">Short description *</label>
+                <textarea id="shortDescription" rows="2" th:field="*{shortDescription}"></textarea>
+                <span class="field-error" th:if="${#fields.hasErrors('shortDescription')}"
+                      th:errors="*{shortDescription}">err</span>
+            </div>
+
+            <div class="form-row">
+                <label for="longDescription">Long description *</label>
+                <textarea id="longDescription" rows="8" th:field="*{longDescription}"></textarea>
+                <span class="field-error" th:if="${#fields.hasErrors('longDescription')}"
+                      th:errors="*{longDescription}">err</span>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-row">
+                    <label for="githubUrl">GitHub URL</label>
+                    <input type="url" id="githubUrl" th:field="*{githubUrl}" placeholder="https://github.com/...">
+                    <span class="field-error" th:if="${#fields.hasErrors('githubUrl')}" th:errors="*{githubUrl}">err</span>
+                </div>
+                <div class="form-row">
+                    <label for="liveDemoUrl">Live demo URL</label>
+                    <input type="url" id="liveDemoUrl" th:field="*{liveDemoUrl}" placeholder="https://...">
+                    <span class="field-error" th:if="${#fields.hasErrors('liveDemoUrl')}" th:errors="*{liveDemoUrl}">err</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="imageUrl">Image URL</label>
+                <input type="url" id="imageUrl" th:field="*{imageUrl}" placeholder="https://...">
+                <span class="field-error" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">err</span>
+            </div>
+
+            <div class="form-row">
+                <label>Technologies</label>
+                <div class="checkbox-grid" th:unless="${#lists.isEmpty(allTechnologies)}">
+                    <label class="check-chip" th:each="tech : ${allTechnologies}">
+                        <input type="checkbox" th:field="*{technologyIds}" th:value="${tech.id}">
+                        <span th:text="${tech.name}">Tech</span>
+                    </label>
+                </div>
+                <span class="form-hint" th:if="${#lists.isEmpty(allTechnologies)}">
+                    No technologies yet — <a th:href="@{/admin/technologies/new}">create one first</a>.
+                </span>
+            </div>
+
+            <div class="form-row form-check">
+                <input type="checkbox" id="featured" th:field="*{featured}">
+                <label for="featured">Mark as featured</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"
+                        th:text="${mode == 'edit'} ? 'Save changes' : 'Create project'">Save</button>
+                <a class="btn btn-outline" th:href="@{/admin/projects}">Cancel</a>
+            </div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

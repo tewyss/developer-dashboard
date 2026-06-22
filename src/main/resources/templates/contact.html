@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Contact')}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="container section">
+    <header class="section-head">
+        <span class="section-index">05.</span>
+        <h1 class="section-title">Get In Touch</h1>
+        <span class="section-rule"></span>
+    </header>
+
+    <div class="contact-wrap reveal">
+        <p class="contact-lead">
+            Have a question or want to work together? Drop me a message below.
+        </p>
+
+        <form class="form" onsubmit="return false;">
+            <div class="form-row">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your name">
+            </div>
+            <div class="form-row">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com">
+            </div>
+            <div class="form-row">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" placeholder="Your message..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send message</button>
+            <p class="form-hint">This form is a layout placeholder — sending is not wired up yet.</p>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

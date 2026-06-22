@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Admin Login')}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="auth-wrap">
+    <div class="auth-card">
+        <h1 class="auth-title">Admin Login</h1>
+        <p class="auth-sub">Sign in to manage your dashboard.</p>
+
+        <div class="alert alert-error" th:if="${param.error}">
+            Invalid username or password.
+        </div>
+        <div class="alert alert-error" th:if="${param.locked}">
+            Too many failed attempts. Please try again in a few minutes.
+        </div>
+        <div class="alert alert-success" th:if="${param.logout}">
+            You have been logged out.
+        </div>
+
+
+        <form class="form" th:action="@{/login}" method="post">
+            <div class="form-row">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" autofocus required>
+            </div>
+            <div class="form-row">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

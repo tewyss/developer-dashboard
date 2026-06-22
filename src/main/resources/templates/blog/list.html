@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Blog')}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="container section">
+    <header class="section-head">
+        <span class="section-index">04.</span>
+        <h1 class="section-title">Blog</h1>
+        <span class="section-rule"></span>
+    </header>
+
+    <div class="placeholder reveal" th:if="${#lists.isEmpty(posts)}">
+        <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+        </div>
+        <p class="empty-title">No posts yet</p>
+        <p class="muted">Articles and write-ups will appear here soon.</p>
+    </div>
+
+    <div class="post-list" th:unless="${#lists.isEmpty(posts)}">
+        <article class="post-row reveal" th:each="post : ${posts}">
+            <p class="post-date muted"
+               th:text="${post.publishedAt != null} ? ${#temporals.format(post.publishedAt, 'd MMM yyyy')} : ''">
+                1 Jan 2026</p>
+            <h2 class="post-title">
+                <a th:href="@{/blog/{slug}(slug=${post.slug})}" th:text="${post.title}">Post title</a>
+            </h2>
+            <p class="muted" th:if="${post.excerpt}" th:text="${post.excerpt}">Excerpt.</p>
+            <a class="post-readmore" th:href="@{/blog/{slug}(slug=${post.slug})}">Read more &rarr;</a>
+        </article>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

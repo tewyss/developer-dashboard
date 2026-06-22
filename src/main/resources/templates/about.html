@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('About')}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="container section">
+    <header class="section-head">
+        <span class="section-index">01.</span>
+        <h1 class="section-title">About Me</h1>
+        <span class="section-rule"></span>
+    </header>
+
+    <div class="about-grid">
+        <div class="about-text reveal">
+            <p>
+                Hello! I'm Rostislav, a developer who enjoys turning ideas into
+                working software. My main focus is the Java &amp; Spring ecosystem,
+                where I like building well-structured, maintainable backends.
+            </p>
+            <p>
+                I'm currently learning by building real projects — this Developer
+                Dashboard being one of them. I care about clean architecture,
+                readable code, and understanding <em>why</em> things work, not just
+                making them work.
+            </p>
+            <p>Here are a few technologies I've been working with recently:</p>
+            <ul class="skills-list">
+                <li>Java 21</li>
+                <li>Spring Boot</li>
+                <li>Spring Security</li>
+                <li>JPA / Hibernate</li>
+                <li>PostgreSQL</li>
+                <li>Thymeleaf</li>
+                <li>Docker</li>
+                <li>Maven</li>
+            </ul>
+        </div>
+        <aside class="about-side reveal">
+            <div class="card">
+                <h3>Quick facts</h3>
+                <ul class="facts">
+                    <li><strong>Role</strong><span>Backend / Full-stack</span></li>
+                    <li><strong>Stack</strong><span>Java &amp; Spring</span></li>
+                    <li><strong>Focus</strong><span>Clean architecture</span></li>
+                    <li><strong>Location</strong><span>Czech Republic</span></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

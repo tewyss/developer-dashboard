@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Technology form · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('technologies')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <a class="back-link" th:href="@{/admin/technologies}">&larr; Back to technologies</a>
+            <h1 th:text="${mode == 'edit'} ? 'Edit technology' : 'New technology'">Technology form</h1>
+        </header>
+
+        <form class="form form-wide"
+              th:object="${technologyForm}"
+              th:action="${mode == 'edit'} ? @{/admin/technologies/{id}(id=*{id})} : @{/admin/technologies}"
+              method="post">
+
+            <div class="form-row">
+                <label for="name">Name *</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="e.g. Spring Boot">
+                <span class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">err</span>
+            </div>
+
+            <div class="form-row">
+                <label for="color">Color</label>
+                <input type="text" id="color" th:field="*{color}" placeholder="#6db33f">
+                <span class="form-hint">Optional hex color for the chip. Leave blank for the default look.</span>
+                <span class="field-error" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">err</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"
+                        th:text="${mode == 'edit'} ? 'Save changes' : 'Create technology'">Save</button>
+                <a class="btn btn-outline" th:href="@{/admin/technologies}">Cancel</a>
+            </div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Notes · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('notes')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header admin-header-row">
+            <div>
+                <h1>Notes</h1>
+                <p class="muted">Your private notes. Only you can see these.</p>
+            </div>
+            <a class="btn btn-primary" th:href="@{/admin/notes/new}">+ New note</a>
+        </header>
+
+        <div class="alert alert-success" th:if="${success}" th:text="${success}">Saved.</div>
+
+        <div class="placeholder" th:if="${#lists.isEmpty(notes)}">
+            <p>No notes yet.</p>
+            <p class="muted">Click "New note" to jot something down.</p>
+        </div>
+
+        <div class="note-grid" th:unless="${#lists.isEmpty(notes)}">
+            <article class="note-card" th:each="note : ${notes}">
+                <h3 th:text="${note.title}">Title</h3>
+                <p class="note-body muted" th:if="${note.content}" th:text="${note.content}">Content...</p>
+                <p class="note-meta muted">
+                    Updated <span th:text="${#temporals.format(note.updatedAt, 'd MMM yyyy, HH:mm')}">date</span>
+                </p>
+                <div class="note-actions">
+                    <a class="btn btn-outline btn-sm" th:href="@{/admin/notes/{id}/edit(id=${note.id})}">Edit</a>
+                    <form th:action="@{/admin/notes/{id}/delete(id=${note.id})}" method="post"
+                          onsubmit="return confirm('Delete this note?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Home')}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main>
+    <section class="hero container">
+        <p class="hero-eyebrow">Hello, I'm</p>
+        <h1 class="hero-title">Rostislav <span class="text-gradient">Nevoral</span></h1>
+        <h2 class="hero-typing">
+
+            <span id="typewriter" class="tw-text"
+                  data-phrases='[
+                    {"t":"I&#39;m an IT enthusiast","k":"IT enthusiast"},
+                    {"t":"I love Java","k":"Java"},
+                    {"t":"I build web applications","k":"web applications"},
+                    {"t":"I enjoy backend development","k":"backend development"},
+                    {"t":"I create modern portfolio projects","k":"modern portfolio projects"}
+                  ]'></span><span class="tw-cursor" aria-hidden="true"></span>
+        </h2>
+        <p class="hero-text">
+            I'm a software developer focused on building clean, reliable backend
+            systems and full-stack web applications with Java and Spring Boot.
+            This dashboard is both my portfolio and my personal command center.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" th:href="@{/projects}">View my work</a>
+            <a class="btn btn-outline" th:href="@{/contact}">Get in touch</a>
+        </div>
+        <div class="hero-socials">
+            <a href="https://github.com/tewyss" target="_blank" rel="noopener">GitHub</a>
+            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener">CV</a>
+            <a href="mailto:rostislav.nevoral@seznam.cz">Email</a>
+        </div>
+    </section>
+
+    <section class="container section">
+        <div class="card-grid">
+            <article class="card reveal">
+                <h3>Backend</h3>
+                <p>Java 21, Spring Boot, Spring Security, JPA/Hibernate, REST APIs.</p>
+            </article>
+            <article class="card reveal">
+                <h3>Frontend</h3>
+                <p>Thymeleaf, semantic HTML, modern CSS, responsive layouts.</p>
+            </article>
+            <article class="card reveal">
+                <h3>Tooling</h3>
+                <p>Maven, PostgreSQL, Docker, Git &amp; GitHub workflows.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

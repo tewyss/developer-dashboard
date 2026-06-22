@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Note form · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('notes')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <a class="back-link" th:href="@{/admin/notes}">&larr; Back to notes</a>
+            <h1 th:text="${mode == 'edit'} ? 'Edit note' : 'New note'">Note form</h1>
+        </header>
+
+        <form class="form form-wide"
+              th:object="${noteForm}"
+              th:action="${mode == 'edit'} ? @{/admin/notes/{id}(id=*{id})} : @{/admin/notes}"
+              method="post">
+
+            <div class="form-row">
+                <label for="title">Title *</label>
+                <input type="text" id="title" th:field="*{title}">
+                <span class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">err</span>
+            </div>
+
+            <div class="form-row">
+                <label for="content">Content</label>
+                <textarea id="content" rows="10" th:field="*{content}"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"
+                        th:text="${mode == 'edit'} ? 'Save changes' : 'Create note'">Save</button>
+                <a class="btn btn-outline" th:href="@{/admin/notes}">Cancel</a>
+            </div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

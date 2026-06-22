@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer class="footer" th:fragment="footer">
+    <div class="container footer-inner">
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2026</span> Developer Dashboard.
+            Built with Spring Boot &amp; Thymeleaf.</p>
+        <div class="footer-links">
+            <a href="https://github.com/tewyss" target="_blank" rel="noopener">GitHub</a>
+            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a th:href="@{/contact}">Contact</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

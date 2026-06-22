@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${project.title})}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="container section">
+    <a class="back-link" th:href="@{/projects}">&larr; Back to projects</a>
+
+    <header class="project-detail-head">
+        <h1 th:text="${project.title}">Project title</h1>
+        <span class="badge badge-accent" th:if="${project.featured}">Featured</span>
+    </header>
+    <p class="project-detail-sub muted" th:text="${project.shortDescription}">Short description.</p>
+
+    <div class="chip-row" th:if="${not #lists.isEmpty(project.technologies)}">
+        <span class="tech-chip" th:each="tech : ${project.technologies}"
+              th:text="${tech.name}"
+              th:style="${tech.color} ? '--chip:' + ${tech.color} : ''">Tech</span>
+    </div>
+
+    <div class="project-detail-actions">
+        <a class="btn btn-primary" th:if="${project.liveDemoUrl}"
+           th:href="${project.liveDemoUrl}" target="_blank" rel="noopener">Live demo</a>
+        <a class="btn btn-outline" th:if="${project.githubUrl}"
+           th:href="${project.githubUrl}" target="_blank" rel="noopener">Source code</a>
+    </div>
+
+    <img class="project-detail-image" th:if="${project.imageUrl}"
+         th:src="${project.imageUrl}" th:alt="${project.title}">
+
+    <div class="project-detail-body">
+        <p th:text="${project.longDescription}">Long description...</p>
+    </div>
+
+    <p class="project-detail-meta muted">
+        Created
+        <span th:text="${#temporals.format(project.createdAt, 'd MMM yyyy')}">1 Jan 2026</span>
+    </p>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

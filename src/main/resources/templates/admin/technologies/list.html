@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Technologies · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('technologies')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header admin-header-row">
+            <div>
+                <h1>Technologies</h1>
+                <p class="muted">Reusable tags you can attach to projects.</p>
+            </div>
+            <a class="btn btn-primary" th:href="@{/admin/technologies/new}">+ New technology</a>
+        </header>
+
+        <div class="alert alert-success" th:if="${success}" th:text="${success}">Saved.</div>
+        <div class="alert alert-error" th:if="${error}" th:text="${error}">Error.</div>
+
+        <div class="placeholder" th:if="${#lists.isEmpty(technologies)}">
+            <p>No technologies yet.</p>
+            <p class="muted">Add a few (e.g. Java, Spring Boot) so you can tag projects.</p>
+        </div>
+
+        <table class="table" th:unless="${#lists.isEmpty(technologies)}">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Preview</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tech : ${technologies}">
+                <td th:text="${tech.name}">Name</td>
+                <td>
+                    <code th:if="${tech.color}" th:text="${tech.color}">#000</code>
+                    <span class="muted" th:unless="${tech.color}">—</span>
+                </td>
+                <td>
+                    <span class="tech-chip"
+                          th:text="${tech.name}"
+                          th:style="${tech.color} ? '--chip:' + ${tech.color} : ''">Chip</span>
+                </td>
+                <td class="actions">
+                    <a class="btn btn-outline btn-sm" th:href="@{/admin/technologies/{id}/edit(id=${tech.id})}">Edit</a>
+                    <form th:action="@{/admin/technologies/{id}/delete(id=${tech.id})}" method="post"
+                          onsubmit="return confirm('Delete this technology?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

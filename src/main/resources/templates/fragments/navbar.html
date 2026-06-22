@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav class="navbar" th:fragment="navbar">
+    <div class="container nav-inner">
+        <a class="brand" th:href="@{/}">
+            <span class="brand-bracket">&lt;</span>Dev<span class="brand-accent">Dashboard</span><span class="brand-bracket">/&gt;</span>
+        </a>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/about}">About</a></li>
+            <li><a th:href="@{/projects}">Projects</a></li>
+            <li><a th:href="@{/blog}">Blog</a></li>
+            <li><a th:href="@{/contact}">Contact</a></li>
+            <li sec:authorize="!isAuthenticated()">
+                <a class="btn btn-outline btn-sm" th:href="@{/login}">Admin Login</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a class="btn btn-primary btn-sm" th:href="@{/admin}">Dashboard</a>
+            </li>
+            <li>
+                <button id="theme-toggle" type="button" class="theme-toggle"
+                        aria-label="Toggle color theme">
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>

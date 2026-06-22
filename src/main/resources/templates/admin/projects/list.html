@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Projects · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('projects')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header admin-header-row">
+            <div>
+                <h1>Projects</h1>
+                <p class="muted">Manage your portfolio projects.</p>
+            </div>
+            <a class="btn btn-primary" th:href="@{/admin/projects/new}">+ New project</a>
+        </header>
+
+        <div class="alert alert-success" th:if="${success}" th:text="${success}">Saved.</div>
+
+        <div class="placeholder" th:if="${#lists.isEmpty(projects)}">
+            <p>No projects yet.</p>
+            <p class="muted">Click "New project" to add your first one.</p>
+        </div>
+
+        <table class="table" th:unless="${#lists.isEmpty(projects)}">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Technologies</th>
+                <th>Featured</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.title}">Title</td>
+                <td>
+                    <div class="chip-row" th:if="${not #lists.isEmpty(project.technologies)}">
+                        <span class="tech-chip" th:each="tech : ${project.technologies}"
+                              th:text="${tech.name}"
+                              th:style="${tech.color} ? '--chip:' + ${tech.color} : ''">Tech</span>
+                    </div>
+                    <span class="muted" th:if="${#lists.isEmpty(project.technologies)}">—</span>
+                </td>
+                <td>
+                    <form th:action="@{/admin/projects/{id}/feature(id=${project.id})}" method="post">
+                        <button type="submit" class="badge"
+                                th:classappend="${project.featured} ? 'badge-accent' : 'badge-muted'"
+                                th:text="${project.featured} ? 'Featured' : 'Off'">Off</button>
+                    </form>
+                </td>
+                <td class="muted" th:text="${#temporals.format(project.updatedAt, 'd MMM yyyy')}">date</td>
+                <td class="actions">
+                    <a class="btn btn-outline btn-sm" th:href="@{/admin/projects/{id}/edit(id=${project.id})}">Edit</a>
+                    <a class="btn btn-outline btn-sm" th:href="@{/projects/{slug}(slug=${project.slug})}"
+                       target="_blank">View</a>
+                    <form th:action="@{/admin/projects/{id}/delete(id=${project.id})}" method="post"
+                          onsubmit="return confirm('Delete this project?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Projects')}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<main class="container section">
+    <header class="section-head">
+        <span class="section-index">03.</span>
+        <h1 class="section-title">Projects</h1>
+        <span class="section-rule"></span>
+    </header>
+
+    <div class="placeholder reveal" th:if="${#lists.isEmpty(projects)}">
+        <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </div>
+        <p class="empty-title">No projects yet</p>
+        <p class="muted">New work is on the way — check back soon.</p>
+    </div>
+
+    <div class="card-grid" th:unless="${#lists.isEmpty(projects)}">
+        <article class="card project-card reveal" th:each="project : ${projects}">
+            <a class="project-card-link" th:href="@{/projects/{slug}(slug=${project.slug})}">
+                <div class="project-thumb-wrap">
+                    <div class="project-thumb"
+                         th:if="${project.imageUrl}"
+                         th:style="'background-image:url(' + ${project.imageUrl} + ')'"></div>
+                    <div class="project-thumb project-thumb-empty" th:unless="${project.imageUrl}">
+                        <span th:text="${#strings.substring(project.title,0,1)}">P</span>
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <div class="project-card-head">
+                        <h3 th:text="${project.title}">Project title</h3>
+                        <span class="badge badge-accent" th:if="${project.featured}">Featured</span>
+                    </div>
+                    <p class="muted" th:text="${project.shortDescription}">Short description.</p>
+                    <div class="chip-row" th:if="${not #lists.isEmpty(project.technologies)}">
+                        <span class="tech-chip" th:each="tech : ${project.technologies}"
+                              th:text="${tech.name}"
+                              th:style="${tech.color} ? '--chip:' + ${tech.color} : ''">Tech</span>
+                    </div>
+                    <span class="project-card-arrow" aria-hidden="true">View project &rarr;</span>
+                </div>
+            </a>
+        </article>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

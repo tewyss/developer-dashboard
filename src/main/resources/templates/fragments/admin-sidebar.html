@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<aside class="admin-sidebar" th:fragment="sidebar(active)">
+    <a class="admin-brand" th:href="@{/admin}">Dev<span class="brand-accent">Dashboard</span></a>
+    <nav class="admin-nav">
+        <a th:href="@{/admin}"              th:classappend="${active == 'dashboard'}     ? 'active'">Dashboard</a>
+        <a th:href="@{/admin/projects}"     th:classappend="${active == 'projects'}      ? 'active'">Projects</a>
+        <a th:href="@{/admin/technologies}" th:classappend="${active == 'technologies'}  ? 'active'">Technologies</a>
+        <a th:href="@{/admin/blog}"         th:classappend="${active == 'blog'}          ? 'active'">Blog</a>
+        <a th:href="@{/admin/notes}"        th:classappend="${active == 'notes'}         ? 'active'">Notes</a>
+        <a th:href="@{/admin/todos}"        th:classappend="${active == 'todos'}         ? 'active'">TODO</a>
+    </nav>
+    <div class="admin-sidebar-footer">
+        <div class="admin-footer-row">
+            <span class="admin-user" sec:authentication="name">admin</span>
+            <button type="button" class="theme-toggle" aria-label="Toggle color theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                </svg>
+            </button>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-outline btn-sm btn-block">Logout</button>
+        </form>
+        <a class="admin-view-site" th:href="@{/}" target="_blank">View site &rarr;</a>
+    </div>
+</aside>
+</body>
+</html>

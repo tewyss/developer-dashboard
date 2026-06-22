@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('TODO · Admin')}"></head>
+<body class="admin-body">
+<div class="admin-layout">
+    <div th:replace="~{fragments/admin-sidebar :: sidebar('todos')}"></div>
+
+    <main class="admin-main">
+        <header class="admin-header admin-header-row">
+            <div>
+                <h1>TODO</h1>
+                <p class="muted">Track your tasks.</p>
+            </div>
+            <a class="btn btn-primary" th:href="@{/admin/todos/new}">+ New task</a>
+        </header>
+
+        <div class="alert alert-success" th:if="${success}" th:text="${success}">Saved.</div>
+
+        <div class="placeholder" th:if="${#lists.isEmpty(tasks)}">
+            <p>No tasks yet.</p>
+            <p class="muted">Click "New task" to add one.</p>
+        </div>
+
+        <table class="table" th:unless="${#lists.isEmpty(tasks)}">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Quick actions</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}" th:classappend="${task.status.name() == 'DONE'} ? 'row-done'">
+                <td>
+                    <span th:text="${task.title}">Title</span>
+                </td>
+                <td>
+                    <span class="badge"
+                          th:classappend="'prio-' + ${task.priority.name().toLowerCase()}"
+                          th:text="${task.priority.label}">Medium</span>
+                </td>
+                <td>
+                    <span class="badge"
+                          th:classappend="'status-' + ${task.status.name().toLowerCase()}"
+                          th:text="${task.status.label}">To do</span>
+                </td>
+                <td class="muted"
+                    th:text="${task.deadline != null} ? ${#temporals.format(task.deadline, 'd MMM yyyy')} : '—'">—</td>
+                <td class="actions">
+                    <!-- One small form per quick action, posting the target status. -->
+                    <form th:each="s : ${statuses}" th:action="@{/admin/todos/{id}/status(id=${task.id})}" method="post"
+                          th:if="${s != task.status}">
+                        <input type="hidden" name="status" th:value="${s.name()}">
+                        <button type="submit" class="btn btn-outline btn-xs" th:text="${s.label}">Status</button>
+                    </form>
+                </td>
+                <td class="actions">
+                    <a class="btn btn-outline btn-sm" th:href="@{/admin/todos/{id}/edit(id=${task.id})}">Edit</a>
+                    <form th:action="@{/admin/todos/{id}/delete(id=${task.id})}" method="post"
+                          onsubmit="return confirm('Delete this task?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>
